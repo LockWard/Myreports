@@ -1,30 +1,32 @@
 import { Router } from 'express'
+
 import * as reportControllers from '../controllers/report.controllers'
 import { verifyToken, isModerator, isAdmin } from '../middlewares/authjwt'
 
 const router: Router = Router()
 // Only accesible by admin or moderator
-router.get('/', reportControllers.getAllReports)
+router.get('/admin', [verifyToken, isModerator], reportControllers.getAllReports)
 
-router.get('/active', reportControllers.getAllReportsActives)
+router.get('/active/admin', [verifyToken, isModerator], reportControllers.getAllReportsActives)
 
-router.get('/completed', reportControllers.getAllReportsCompleted)
+router.get('/completed/admin', [verifyToken, isModerator], reportControllers.getAllReportsCompleted)
 
+router.put('/:id/toggle', [verifyToken, isModerator], reportControllers.putReportToggleByAdmin)
 
-router.get('/:id', reportControllers.getReportId)
-
-router.post('/', [verifyToken, isModerator], reportControllers.postReport)
-
-router.put('/:id', reportControllers.putReport)
-
-router.delete('/:id', [verifyToken, isAdmin], reportControllers.deleteReport)
+router.delete('/:id/admin', [verifyToken, isAdmin], reportControllers.deleteReport)
 
 
 // View by normal user logged
-router.get('/all', reportControllers.getAllReportsByUser)
+router.get('/:id', [verifyToken], reportControllers.getReportId)
 
-/* router.get('/active/', reportControllers.getAllReportsActivesByUser)
+router.get('/all', [verifyToken], reportControllers.getAllReportsByUser)
 
-router.get('/completed/', reportControllers.getAllReportsCompletedByUser) */
+router.get('/active', [verifyToken], reportControllers.getAllReportsActivesByUser)
+
+router.get('/completed', [verifyToken], reportControllers.getAllReportsCompletedByUser)
+
+router.post('/', [verifyToken], reportControllers.postReport)
+
+router.put('/:id', [verifyToken], reportControllers.putReport)
 
 export default router

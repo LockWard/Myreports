@@ -10,7 +10,9 @@ router.get('/', [verifyToken, isModerator, isAdmin], userControllers.getAllUsers
 router.get('/:id', [verifyToken], userControllers.getUserId)
 
 
-router.put('/:id', [verifyToken], userControllers.putUser)
+router.post('/', [verifyToken, isModerator, isAdmin], userControllers.postUserByAdmin)
+
+router.put('/:id', [verifyToken, isModerator, isAdmin], userControllers.putUserByAdmin)
 
 router.delete('/:id', [verifyToken, isModerator, isAdmin], userControllers.deleteUser)
 

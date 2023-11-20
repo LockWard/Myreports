@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import { jwtSecret } from '../config/config'
 import * as userModels from '../models/user.models'
 
-function verifyAccessToken(token: string): Promise<JwtPayload> {
+export function verifyAccessToken(token: string): Promise<JwtPayload> {
     return new Promise((resolve, reject) => {
         jwt.verify(token, jwtSecret, (err, payload) => {
             if (err) {
