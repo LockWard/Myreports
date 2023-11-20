@@ -9,7 +9,6 @@ import reportRoutes from './routes/report.routes'
 import departmentRoutes from './routes/department.routes'
 
 const app = express()// The main app
-// const admin = express()// The sub app
 
 // Middleware - This transform the req.body to json
 app.use(helmet())

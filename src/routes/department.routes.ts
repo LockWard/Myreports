@@ -9,6 +9,7 @@ router.get('/', [verifyToken, isModerator, isAdmin], departmentControllers.getAl
 
 router.get('/:id', [verifyToken, isModerator, isAdmin], departmentControllers.getDepartmentId)
 
+
 router.post('/', [verifyToken, isAdmin], departmentControllers.postDepartment)
 
 router.put('/:id', [verifyToken, isAdmin], departmentControllers.putDepartment)

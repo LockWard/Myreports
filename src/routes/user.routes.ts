@@ -7,13 +7,12 @@ const router: Router = Router()
 
 router.get('/', [verifyToken, isModerator, isAdmin], userControllers.getAllUsers)
 
-// router.post('/', userControllers.postUser)
+router.get('/:id', [verifyToken], userControllers.getUserId)
 
-router.get('/:id', [verifyToken], userControllers.getUserId)// Profile
 
 router.put('/:id', [verifyToken], userControllers.putUser)
 
-router.delete('/:id', [verifyToken, isAdmin], userControllers.deleteUser)
+router.delete('/:id', [verifyToken, isModerator, isAdmin], userControllers.deleteUser)
 
 /* router.route('/')
     .get(userControllers.getUsers)
