@@ -1,10 +1,11 @@
 import mysql from 'mysql2/promise'
+import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from '../config/config'
 
 export const conn = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD ||'admin',
-    database: process.env.DB_NAME ||'myreport',
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
     waitForConnections: true,
 })
 

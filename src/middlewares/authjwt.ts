@@ -1,35 +1,19 @@
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express";
 
-import { jwtSecret } from '../config/config'
+import { JWT_SECRET } from '../config/config'
 import * as userModels from '../models/user.models'
 
 export function verifyAccessToken(token: string): Promise<JwtPayload> {
     return new Promise((resolve, reject) => {
-        jwt.verify(token, jwtSecret, (err, payload) => {
+        jwt.verify(token, JWT_SECRET, (err, payload) => {
             if (err) {
-                return reject
+                return reject(err)
             }
-            return resolve(<JwtPayload>payload);
-        });
-    });
+            return resolve(<JwtPayload>payload)
+        })
+    })
 }
-
-/* function verifyAccessToken(token: string) {
-        const json = jwt.verify(token, jwtSecret)
-        return json
-} */
-
-/* export function requireRole(role: number, role_received: number) {
-    return (_req: Request, res: Response) => {
-        if (role === role_received) {
-            // User has the required role, proceed
-            return
-        } else {
-            res.status(403).json({ message: 'Permission denied.' });
-        }
-    };
-} */
 
 export const verifyToken = async (req: Request, res: Response, next: NextFunction): Promise<Response | any> => {
 
@@ -44,7 +28,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
             const user = userModels.getUserId(payload.id)
             if (!user) return res.status(400).json({ message: "No user found" })
             return payload
-        }); */
+        })  */
 
         const decoded = await verifyAccessToken(token)
         
@@ -53,9 +37,11 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 
         return next()
     } catch (error) {
-        return res.status(401).json({ message: "Unauthorized" });
+
+        return res.status(401).json({ message: "Unauthorized" })
+
     }
-};
+}
 
 export const isModerator = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -71,11 +57,14 @@ export const isModerator = async (req: Request, res: Response, next: NextFunctio
             return next()
         }
 
-        return res.status(403).json({ message: "Require moderator role" });
+        return res.status(403).json({ message: "Require moderator role" })
+
     } catch (error) {
-        return res.status(500).send({ message: error });
+
+        return res.status(500).send({ message: error })
+
     }
-};
+}
 
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -91,8 +80,11 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
             return next()
         }
 
-        return res.status(403).json({ message: "Require admin role" });
+        return res.status(403).json({ message: "Require admin role" })
+
     } catch (error) {
-        return res.status(500).send({ message: error });
+
+        return res.status(500).send({ message: error })
+
     }
-};
+}

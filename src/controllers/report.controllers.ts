@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
+import { verifyAccessToken } from '../middlewares/authjwt'
 import * as reportModels from '../models/report.models'
 import * as userModels from '../models/user.models'
-import { verifyAccessToken } from '../middlewares/authjwt'
 
 export const getAllReports = async (_req: Request, res: Response): Promise<Response | any> => {
     try {

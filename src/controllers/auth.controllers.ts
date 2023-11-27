@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { jwtSecret } from '../config/config'
+import { JWT_SECRET } from '../config/config'
 import * as userModels from '../models/user.models'
 import { comparePassword, hashPassword } from '../models/user.models'
 
@@ -9,7 +9,7 @@ import { comparePassword, hashPassword } from '../models/user.models'
 const maxAge = 86400
 
 function createToken(id?: string) {
-return jwt.sign({ id }, jwtSecret, {
+return jwt.sign({ id }, JWT_SECRET, {
 
         expiresIn: maxAge
 
